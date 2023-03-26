@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\User;
+use App\Models\Tag;
+
 // use App\Models\Category;
 use Illuminate\Support\Str;
 
- use App\Models\Tag;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,14 +93,16 @@ class ProductsController extends Controller
     {
        // dd($request->all());
        $product->update($request->except('tags'));
-       //dd($request->tags);
-        $tags=explode(',',$request->post('tags'));
+      // dd($request->tags);
+       $tags = json_decode($request->post('tags'));
+      //  $tags=explode(',',$request->post('tags'));
+        $saved_tags=Tag::all();
         foreach($tags as $t_name) {
-            $slug=Str::slug($t_name);
-            $tag=Tag::where('slug',$slug)->first();
+            $slug=Str::slug($t_name->value);
+            $tag=$saved_tags->where('slug',$slug)->first();
             if(!$tag){
                 $tag=Tag::create([
-                 'name'=>$t_name,
+                 'name'=>$t_name->value,
                  'slug'=>$slug,
                 ]);
             }

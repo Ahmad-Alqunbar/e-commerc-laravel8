@@ -1,5 +1,7 @@
 @extends('layouts.dashboard')
-
+@push('style')
+<link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+@endpush
 @section('title', 'Edit Products ')
 
 @section('breadcrumb')
@@ -95,3 +97,11 @@
 
 
 @endsection
+@push('script')
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+<script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+<script>
+    var inputElm = document.querySelector('[name=tags]'),
+    tagify = new Tagify (inputElm);
+</script>
+@endpush

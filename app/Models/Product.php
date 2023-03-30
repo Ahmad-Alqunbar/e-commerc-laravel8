@@ -34,6 +34,10 @@ class Product extends Model
 
         );
     }
+    public function ScopeActive(Builder $builder)
+    {
+        $builder->where('status','=',1);
+    }
     public function catrgory()
     {
         return $this->belongsTo(Category::class,'category_id','id');
@@ -49,7 +53,7 @@ class Product extends Model
         static::addGlobalScope('store',function (Builder $builder)
         {
             $user=Auth::user();
-            if($user->store_id){
+            if($user && $user->store_id){
                 $builder->where('store_id','=',$user->store_id);
             }
                     });

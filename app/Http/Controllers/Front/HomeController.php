@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Http\Controllers\Front;
-
 use App\Http\Controllers\Controller;
+use App\Models\Product;
+
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     public function index()
     {
-            $title='Home Page';
-            return view('front.home');
+    $products=Product::with('catrgory')->active()->latest()->limit(8)->get();
+            return view('front.home',compact('products'));
     }
 }
